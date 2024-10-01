@@ -13,6 +13,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import flexBox from "./components/flexBox";
+import FlexBox from "./components/flexBox";
 interface ITodo {
   id: number;
   name: string;
@@ -46,40 +48,41 @@ export default function App() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-      <View style={styles.container}>
-        {/* header */}
-        <Text style={styles.header}>Hehehe</Text>
+    <FlexBox/>
+    // <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+    //   <View style={styles.container}>
+    //     {/* header */}
+    //     <Text style={styles.header}>Hehehe</Text>
 
-        {/* form  */}
-        <View style={styles.body}>
-          <TextInput
-            value={toDo}
-            style={styles.toDoInput}
-            onChangeText={(value) => setToDo(value)}
-          />
-          <Button title="Add to do" onPress={handleAddTodo} />
-        </View>
+    //     {/* form  */}
+    //     <View style={styles.body}>
+    //       <TextInput
+    //         value={toDo}
+    //         style={styles.toDoInput}
+    //         onChangeText={(value) => setToDo(value)}
+    //       />
+    //       <Button title="Add to do" onPress={handleAddTodo} />
+    //     </View>
 
-        {/* list to do  */}
-        <View style={styles.body}>
-          <FlatList
-            data={listToDo}
-            keyExtractor={(item) => item.id + ""}
-            renderItem={({ item }) => {
-              return (
-                <Pressable
-                  style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-                  onPress={() => deleteToDo(item.id)}
-                >
-                  <Text style={styles.toDoItem}>{item.name}</Text>
-                </Pressable>
-              );
-            }}
-          />
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+    //     {/* list to do  */}
+    //     <View style={styles.body}>
+    //       <FlatList
+    //         data={listToDo}
+    //         keyExtractor={(item) => item.id + ""}
+    //         renderItem={({ item }) => {
+    //           return (
+    //             <Pressable
+    //               style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+    //               onPress={() => deleteToDo(item.id)}
+    //             >
+    //               <Text style={styles.toDoItem}>{item.name}</Text>
+    //             </Pressable>
+    //           );
+    //         }}
+    //       />
+    //     </View>
+    //   </View>
+    // </TouchableWithoutFeedback>\
   );
 }
 // dùng vòng map để tạo ra 1 array mới mà không làm thay đổi giá trị của biến ban đầu
