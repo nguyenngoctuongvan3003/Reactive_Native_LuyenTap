@@ -2,55 +2,68 @@ import { useState } from "react";
 import {
   Button,
   FlatList,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
-interface ITodo{
-  id:number,
-  name:string
+interface ITodo {
+  id: number;
+  name: string;
 }
 export default function App() {
   const [toDo, setToDo] = useState("");
   const [listToDo, setListToDo] = useState<ITodo[]>([]);
-  
+
   function randomInteger(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  const handleAddTodo=()=>{
-    if(!toDo) return;
-    setListToDo
-    ([...listToDo,{id: randomInteger(2,2000000),name:toDo}])
-    setToDo("")
-  }
-  
+  const handleAddTodo = () => {
+    if (!toDo) {
+      alert("empty todo");
+      return;
+    }
+    setListToDo([...listToDo, { id: randomInteger(2, 2000000), name: toDo }]);
+    setToDo("");
+  };
+  const deleteToDo = (id: number) => {
+    const newToDos = listToDo.filter((item) => item.id !== id);
+    setListToDo(newToDos);
+  };
+
   return (
     <View style={styles.container}>
       {/* header */}
       <Text style={styles.header}>Hehehe</Text>
-      
+
       {/* form  */}
       <View style={styles.body}>
-        <TextInput 
-        value={toDo}
-        style={styles.toDoInput}
-        onChangeText={(value)=>setToDo(value)} />
-        <Button title="Add to do"
-        onPress={handleAddTodo} />
+        <TextInput
+          value={toDo}
+          style={styles.toDoInput}
+          onChangeText={(value) => setToDo(value)}
+        />
+        <Button title="Add to do" onPress={handleAddTodo} />
       </View>
 
       {/* list to do  */}
-      <View  style={styles.body}>
-       <FlatList
+      <View style={styles.body}>
+        <FlatList
           data={listToDo}
-          keyExtractor= {item=>item.id+""}
-          renderItem={({item}) =>{
-            return(
-              <Text style={styles.toDoItem}>{item.name}</Text>
-            )
+          keyExtractor={(item) => item.id + ""}
+          renderItem={({ item }) => {
+            return (
+              <Pressable
+                style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+                onPress={() => deleteToDo(item.id)}
+              >
+                <Text style={styles.toDoItem}>{item.name}</Text>
+              </Pressable>
+            );
           }}
         />
       </View>
@@ -81,14 +94,14 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 15,
   },
-  body:{
-    paddingHorizontal:10,
-    marginBottom: 20
+  body: {
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
   toDoItem: {
-    fontSize:30,
-    borderWidth:1,
+    fontSize: 30,
+    borderWidth: 1,
     borderStyle: "dashed",
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 });
