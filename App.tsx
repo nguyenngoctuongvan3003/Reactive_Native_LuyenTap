@@ -1,13 +1,16 @@
 import { useState } from "react";
 import {
+  Alert,
   Button,
   FlatList,
+  Keyboard,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 interface ITodo {
@@ -24,7 +27,14 @@ export default function App() {
 
   const handleAddTodo = () => {
     if (!toDo) {
-      alert("empty todo");
+      Alert.alert("Lỗi input to do", "To do không được null", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
       return;
     }
     setListToDo([...listToDo, { id: randomInteger(2, 2000000), name: toDo }]);
@@ -36,38 +46,40 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* header */}
-      <Text style={styles.header}>Hehehe</Text>
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+      <View style={styles.container}>
+        {/* header */}
+        <Text style={styles.header}>Hehehe</Text>
 
-      {/* form  */}
-      <View style={styles.body}>
-        <TextInput
-          value={toDo}
-          style={styles.toDoInput}
-          onChangeText={(value) => setToDo(value)}
-        />
-        <Button title="Add to do" onPress={handleAddTodo} />
-      </View>
+        {/* form  */}
+        <View style={styles.body}>
+          <TextInput
+            value={toDo}
+            style={styles.toDoInput}
+            onChangeText={(value) => setToDo(value)}
+          />
+          <Button title="Add to do" onPress={handleAddTodo} />
+        </View>
 
-      {/* list to do  */}
-      <View style={styles.body}>
-        <FlatList
-          data={listToDo}
-          keyExtractor={(item) => item.id + ""}
-          renderItem={({ item }) => {
-            return (
-              <Pressable
-                style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-                onPress={() => deleteToDo(item.id)}
-              >
-                <Text style={styles.toDoItem}>{item.name}</Text>
-              </Pressable>
-            );
-          }}
-        />
+        {/* list to do  */}
+        <View style={styles.body}>
+          <FlatList
+            data={listToDo}
+            keyExtractor={(item) => item.id + ""}
+            renderItem={({ item }) => {
+              return (
+                <Pressable
+                  style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+                  onPress={() => deleteToDo(item.id)}
+                >
+                  <Text style={styles.toDoItem}>{item.name}</Text>
+                </Pressable>
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 // dùng vòng map để tạo ra 1 array mới mà không làm thay đổi giá trị của biến ban đầu
