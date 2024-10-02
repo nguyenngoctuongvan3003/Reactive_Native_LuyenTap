@@ -4,7 +4,6 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
     flexDirection: "row",
     backgroundColor: "pink",
     paddingHorizontal: 5,
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
     // borderColor:"red",
   },
   headerText: {
-    width: "100%",
+    flex:1,
     textAlign: "center",
     fontSize: 25,
     fontWeight: "600",

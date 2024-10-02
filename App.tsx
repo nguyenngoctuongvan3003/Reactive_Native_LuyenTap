@@ -16,6 +16,7 @@ const Drawer = createDrawerNavigator();
 import { NavigationContainer } from "@react-navigation/native"; //drawer hay stack đều dùng
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppNavigation from "./components/navigation/app.navigation";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,17 +44,19 @@ const App = () => {
     //   <AboutScreen />
     // </View>
 
-    <NavigationContainer>
-      <AppNavigation/>
-      {/* <Stack.Navigator>
+    <SafeAreaView style={{flex:1}}>
+      <NavigationContainer>
+        <AppNavigation />
+        {/* <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen}  options={{ title: 'Trang chủ' }} />
         <Stack.Screen name="review-detail" component={DetailScreen} options={{ title: 'Chi tiết review' }}/>
       </Stack.Navigator> */}
-      {/* <Drawer.Navigator>
+        {/* <Drawer.Navigator>
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="about" component={AboutScreen} options={{title:"Thông tin"}} />
       </Drawer.Navigator> */}
-    </NavigationContainer>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 };
 
